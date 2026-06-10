@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/lib/site-config"
 import { cn } from "@/lib/utils"
 import { Logo } from "@/components/site/logo"
+import { ThemeToggle } from "@/components/site/theme-toggle"
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -55,6 +56,7 @@ export function Navbar() {
         </ul>
 
         <div className="hidden items-center gap-2 md:flex">
+          <ThemeToggle />
           <Button variant="ghost" size="sm" asChild>
             <a href={`tel:${siteConfig.contact.phone}`} className="gap-2">
               <Phone className="h-4 w-4" /> Talk to farm
@@ -65,13 +67,16 @@ export function Navbar() {
           </Button>
         </div>
 
-        <button
-          aria-label="Toggle navigation"
-          onClick={() => setOpen((v) => !v)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/80 md:hidden"
-        >
-          {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            aria-label="Toggle navigation"
+            onClick={() => setOpen((v) => !v)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/80"
+          >
+            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
+        </div>
       </motion.nav>
 
       <AnimatePresence>
@@ -97,6 +102,7 @@ export function Navbar() {
               ))}
             </ul>
             <div className="mt-4 flex flex-col gap-2 border-t border-border/60 pt-4">
+              <ThemeToggle variant="row" />
               <Button variant="outline" asChild>
                 <a href={`tel:${siteConfig.contact.phone}`}>
                   <Phone className="h-4 w-4" /> Talk to farm

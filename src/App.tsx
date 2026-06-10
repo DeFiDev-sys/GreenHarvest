@@ -11,26 +11,29 @@ import { Pricing } from "@/components/site/pricing"
 import { Faq } from "@/components/site/faq"
 import { CtaBanner } from "@/components/site/cta-banner"
 import { Footer } from "@/components/site/footer"
+import { ThemeProvider } from "@/components/site/theme-provider"
 
 function App() {
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-background">
-      <Navbar />
-      <main>
-        <Hero />
-        <LogoMarquee />
-        <Features />
-        <Products />
-        <About />
-        <Process />
-        <Stats />
-        <Testimonials />
-        <Pricing />
-        <Faq />
-        <CtaBanner />
-      </main>
-      <Footer />
-    </div>
+    <ThemeProvider>
+      <div className="relative min-h-screen overflow-x-hidden bg-background">
+        <Navbar />
+        <main>
+          <Hero />
+          <LogoMarquee />
+          <Features />
+          <Products />
+          <About />
+          <Process />
+          <Stats />
+          <Testimonials />
+          <Pricing />
+          <Faq />
+          <CtaBanner />
+        </main>
+        <Footer />
+      </div>
+    </ThemeProvider>
   )
 }
 

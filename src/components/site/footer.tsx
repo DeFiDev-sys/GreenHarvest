@@ -52,7 +52,7 @@ const socials = [
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-border/70 bg-gradient-to-b from-background to-leaf-50/60">
+    <footer className="relative border-t border-border/70 bg-gradient-to-b from-background to-leaf-50/60 dark:to-leaf-900/20">
       <div className="container py-16">
         <div className="grid gap-12 lg:grid-cols-[1.4fr,2fr]">
           <div className="flex flex-col gap-6">
