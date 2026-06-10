@@ -1,10 +1,26 @@
+import type { MouseEvent } from "react"
 import { Leaf } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function Logo({ className }: { className?: string }) {
+  const scrollToTop = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    })
+    if (window.history.replaceState) {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search)
+    }
+  }
+
   return (
     <a
       href="#top"
+      onClick={scrollToTop}
       className={cn(
         "group inline-flex items-center gap-2.5 font-display text-lg tracking-tight",
         className
