@@ -1,8 +1,11 @@
-import { motion } from "framer-motion"
-import { ArrowRight, Leaf, Play, ShieldCheck, Sprout, Sun } from "lucide-react"
+import { AnimatePresence, motion } from "framer-motion"
+import { ArrowRight, Leaf, Play, ShieldCheck, Sprout, Sun, X } from "lucide-react"
+import { useState } from "react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+
+const STORY_VIDEO_ID = import.meta.env.VITE_STORY_VIDEO_ID
 
 const HERO_BACKDROP =
   "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1920&q=80"
@@ -33,6 +36,8 @@ const item = {
 }
 
 export function Hero() {
+  const [storyOpen, setStoryOpen] = useState(false)
+
   return (
     <section className="relative isolate overflow-hidden pt-32 pb-20 sm:pt-36 md:pt-40 lg:pb-28">
       {/* Backdrop layers */}
@@ -107,13 +112,16 @@ export function Hero() {
                   Explore the harvest <ArrowRight className="h-4 w-4" />
                 </a>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <a href="#process" className="gap-2.5">
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-foreground text-background">
-                    <Play className="h-3 w-3 fill-current" />
-                  </span>
-                  Watch our story · 02:14
-                </a>
+              <Button
+                size="lg"
+                variant="outline"
+                className="gap-2.5"
+                onClick={() => setStoryOpen(true)}
+              >
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-foreground text-background">
+                  <Play className="h-3 w-3 fill-current" />
+                </span>
+                Watch our story · 02:14
               </Button>
             </motion.div>
 
@@ -226,6 +234,50 @@ export function Hero() {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Story video modal */}
+      <AnimatePresence>
+        {storyOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 p-4 backdrop-blur-sm"
+            onClick={() => setStoryOpen(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Our story video"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.25, ease: [0.21, 0.47, 0.32, 0.98] }}
+              className="relative w-full max-w-3xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={() => setStoryOpen(false)}
+                aria-label="Close video"
+                className="absolute -top-11 right-0 inline-flex h-9 w-9 items-center justify-center rounded-full bg-background/80 text-foreground ring-1 ring-border/60 transition hover:bg-background"
+              >
+                <X className="h-4 w-4" />
+              </button>
+              <div className="aspect-video w-full overflow-hidden rounded-2xl border border-border/60 bg-black shadow-2xl">
+                <iframe
+                  className="h-full w-full"
+                  src={`https://www.youtube.com/embed/${STORY_VIDEO_ID}?autoplay=1&rel=0`}
+                  title="Our story"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
